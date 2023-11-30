@@ -1,17 +1,10 @@
-//
-//  main.c
-//  LinerAndBinarySearch
-//
-//  Created by Joe Laporte on 11/28/23.
-//
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 void fillRandomArray(int array[], int size, int range) {
     for (int i = 0; i < size; i++) {
-        array[i] = rand() % range; // Generate a random number between 0 and range x
+        array[i] = rand() % range; // Generate a random number between 0 and range X(any number user inputs,
     }
 }
 
@@ -23,6 +16,8 @@ void printArray(int array[], int size) {
 }
 
 void linerSearch(int *arrayList, int size, int target) {
+    printf ("-LINEAR SEARCH-\n");
+
     int linCount = 0;
 
     for (int i = 0; i < size; i++) {
@@ -30,14 +25,48 @@ void linerSearch(int *arrayList, int size, int target) {
 
         if (arrayList[i] == target) {
             printf("Found %d at index %d\n", target, i);
+            printf("\n");
             return;
         }
     }
 
     printf("%d not found in the array\n", target);
+    printf("\n");
+}
+int compare(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
 }
 
+void binarySearch(int *arrayList, int size, int target){
+    printf ("-BINARY SEARCH-\n");
+    int low = 0;
+    int high = sizeof(*arrayList) / sizeof(arrayList[0]);
+    int mid = 0;
+    int binCount = 0;
+    qsort(arrayList, high, sizeof(int), compare);
+    
+    while(low <= high){
+        binCount += 1;
+        mid = (low + high) / 2;
+        if (target ==  arrayList[mid]) {
+            // Returns found number you asked to seach for
+            printf ("Found %d\n",target);
+            printf("Binary Search for %d took %d steps!\n", target, binCount);
+            printf("\n");
+            return;
+        } else if (target < arrayList[mid]) {
+            high = mid - 1;
+            
+        } else {
+            low = mid + 1;
+            
+        }
+        printf("%d not found in the array\n", target);
+        printf("\n");
 
+    }
+}
+    
 int main(void) {
     int length;
     int number;
@@ -45,29 +74,31 @@ int main(void) {
     scanf("%d", &length);
     printf("What is your favorite number?: ");
     scanf("%d", &number);
-
-    // Dynamically allocate memory for the array
-    // Dynamically allocate memory for the array
-       int *arrayList = (int *)malloc(length * sizeof(int));
-       
-       // Check if memory allocation was successful
-       if (arrayList == NULL) {
-           fprintf(stderr, "Memory allocation failed\n");
-           exit(EXIT_FAILURE);
-       }
-
-       // Populate the array with random numbers
-       fillRandomArray(arrayList, length, 100);  // Assuming a range of 0 to 99
-
-       // Print the generated array
-       printf("Random Array: ");
-       printArray(arrayList, length);
-
-       // Example usage
-       linerSearch(arrayList, length, number);
-
-       // Don't forget to free the dynamically allocated memory
-       free(arrayList);
-
-       return 0;
+    printf("\n");
+        
+    // allocate memory for the array
+    int *arrayList = (int *)malloc(length * sizeof(int));
+        
+    // Check if memory allocation was successful
+    if (arrayList == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+        
+    // Populate the array with random numbers 1-100
+    fillRandomArray(arrayList, length, 100);  // Assuming a range of 0 to 99 - for the sake of simple, for now.
+        
+    // Print the random array
+    printf("Random Array: ");
+    printArray(arrayList, length);
+    printf("\n");
+    linerSearch(arrayList, length, number);
+    binarySearch(arrayList, length, number);
+        
+    // free sets the allocted momory for this variable free
+    free(arrayList);
+        
+    return 0;
+        
+    
 }
