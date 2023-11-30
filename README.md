@@ -7,4 +7,4 @@ This is my first C program. It's a translation of a linear search I did in pytho
     search algorithm will search for, keep in mind this array will generate completely random numbers
     so your number may take a few tries to be in the list. 
 
-    Please critique as needed. This is my first C piece of code and would like to expand on this more.
+    Please critique as needed. This is my first piece of C code and would like to expand on it more.
